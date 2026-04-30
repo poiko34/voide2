@@ -316,18 +316,14 @@ int main(int argc, char* argv[]) {
     char c;
     while (doc.get_work()) {
 
-        // ЧИТАЕМ СИМВОЛ
 #ifdef _WIN32
-        // На Windows _getch() берет символ напрямую из консоли
         c = (char)_getch();
 #else
-        // На Linux используем стандартный read
         if (read(STDIN_FILENO, &c, 1) != 1) break;
 #endif
 
         int code = key_code(c);
 
-        // 1. Проверка на выход
         if (code == K_EXIT) {
             if (!doc.get_save()) {
                 doc.draw_msg("Are you sure? N - no, Y - yes");
@@ -356,7 +352,6 @@ int main(int argc, char* argv[]) {
             continue;
         }
 
-        // 2. Обработка клавиш
         switch (code) {
         case K_UP:        doc.cursor_ym(); break;
         case K_DOWN:      doc.cursor_yp(); break;
@@ -369,7 +364,6 @@ int main(int argc, char* argv[]) {
         case K_SAVE:      doc.save();      break;
 
         case K_NONE:
-            // Добавляем только печатные символы
             if ((unsigned char)c >= 32) {
                 doc.add_char(c);
             }
