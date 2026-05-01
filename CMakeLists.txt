@@ -9,6 +9,7 @@ set(SOURCES
     src/terminal_manager.cpp 
     src/keycode.cpp 
     src/init.cpp
+    src/document.cpp
 )
 
 include_directories(src)

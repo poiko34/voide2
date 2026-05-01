@@ -9,18 +9,15 @@
     #include <unistd.h>
 #endif
 
-// Реализация методов класса
 TerminalManager::TerminalManager() {
     enableRawMode();
 }
 
 TerminalManager::~TerminalManager() {
-    // Очистка экрана: \033[H - курсор в начало, \033[2J - очистить всё
     std::cout << "\033[H\033[2J" << std::flush;
     disableRawMode();
 }
 
-// Кросплатформенное получение размера окна
 struct winsize get_terminal_size() {
     struct winsize ws;
 #ifdef _WIN32
@@ -34,7 +31,6 @@ struct winsize get_terminal_size() {
         ws.ws_row = 24;
     }
 #else
-    // Используем STDOUT_FILENO (обычно 1) для запроса к терминалу
     if (ioctl(1, TIOCGWINSZ, &ws) == -1 || ws.ws_col == 0) {
         ws.ws_col = 80;
         ws.ws_row = 24;
