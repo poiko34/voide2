@@ -58,18 +58,6 @@ make
 
 ---
 
-## 📂 Project Structure
-
-```
-src/
- ├── main.cpp               # Main event loop and document orchestration
- ├── terminal_manager.cpp  # Raw mode handling
- ├── keycode.cpp           # Input parsing
- └── init.cpp              # Platform-specific initialization
-```
-
----
-
 ## 🛠️ Technical Implementation
 
 * **Linux**: Configures `termios` (disables `ECHO`, `ICANON`)
