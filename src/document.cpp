@@ -38,7 +38,7 @@ bool Document::check_scroll() {
     return changed;
 }
 void Document::draw_ui() {
-    string name = "voide 2.0";
+    string name = "voide 2.1";
     int pad_left = (ws.ws_col - (int)filename.length() - (int)name.length()) / 2;
     if (pad_left < 2) pad_left = 2;
 
@@ -90,7 +90,7 @@ void Document::curs_doc_update() {
     string out = "\033[?25l";
 
     int visible_height = ws.ws_row - 4;
-    int visible_width = ws.ws_col;
+    // int visible_width = ws.ws_col;
     int screen_row = 0;
 
     for (int i = curs.scroll_y; i < (int)lines.size(); i++) {
@@ -128,11 +128,7 @@ void Document::add_char(char c) {
     curs.point_x++;
     is_saves = false;
         
-    if(check_scroll() == true) {
-        curs_doc_update();
-    } else {
-        curs_line_update();
-    }
+    curs_doc_update();
 }
 void Document::back_char() {
     if(curs.point_x > 0) {
@@ -175,11 +171,20 @@ void Document::cursor_xp() {
     if(curs.point_x == static_cast<int>(lines[curs.point_y].length()) && curs.point_y + 1 < static_cast<int>(lines.size())) {
         curs.point_x = 0;
         curs.point_y++;
-        if (check_scroll()) curs_doc_update();
-        else cursor_update();
+        if (check_scroll()) {
+            curs_doc_update();
+        }
+        else {
+            cursor_update();
+        }
     } else if(curs.point_x + 1 <= static_cast<int>(lines[curs.point_y].length())) {
         curs.point_x++;
-        cursor_update();
+        if (check_scroll()) {
+            curs_doc_update();
+        }
+        else {
+            cursor_update();
+        }
     }
 }
 
@@ -187,11 +192,20 @@ void Document::cursor_xm() {
     if(curs.point_x == 0 && curs.point_y > 0) {
         curs.point_y--;
         curs.point_x = static_cast<int>(lines[curs.point_y].length());
-        if (check_scroll()) curs_doc_update();
-        else cursor_update();
+        if (check_scroll()) {
+            curs_doc_update();
+        }
+        else {
+            cursor_update();
+        }
     } else if(curs.point_x > 0) {
         curs.point_x--;
-        cursor_update();
+        if (check_scroll()) {
+            curs_doc_update();
+        }
+        else {
+            cursor_update();
+        }
     }
 }
 void Document::cursor_yp() {
