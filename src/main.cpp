@@ -25,7 +25,7 @@ using std::vector;
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        std::cout << "Usage: ./voide <file>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <file>" << std::endl;
         return 0;
     }
 
